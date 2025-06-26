@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <title>Exploración Urbana</title>
-<link rel="stylesheet" href="../css/estilos.css" />
+  <link rel="stylesheet" href="../css/estilos.css" />
 
   <style>
     .exploracion {
@@ -62,86 +62,12 @@
     }
   </style>
 </head>
-<!------- Esto es el enlace de la base de datos a la caja de comentarios ----->
-
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-  import { getDatabase } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
-
-  const firebaseConfig = {
-    apiKey: "AIzaSyAytiZpTTTpEubyapemywSSVnRs7OfrHT0",
-    authDomain: "comentarios-exploracion.firebaseapp.com",
-    projectId: "comentarios-exploracion",
-    storageBucket: "comentarios-exploracion.firebasestorage.app",
-    messagingSenderId: "706570100799",
-    appId: "1:706570100799:web:6decf184c6c5f5fb07d88a",
-    databaseURL: "https://comentarios-exploracion-default-rtdb.firebaseio.com"
-  };
-
-  const app = initializeApp(firebaseConfig);
-</script>
-
-
-<!------- Esto es el enlace de la base de datos a la caja de comentarios ----->
-
-<!------- Esto sirve para manejar los comentarios ----->
-
-<script type="module">
-  import { getDatabase, ref, push, onValue, query, limitToLast } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
-
-  const db = getDatabase();
-
-  document.querySelectorAll('.comentarios').forEach(seccion => {
-    const idSeccion = seccion.dataset.id;
-    const lista = seccion.querySelector('.lista-comentarios');
-    const textarea = seccion.querySelector('.comentario-textarea');
-    const btnPublicar = seccion.querySelector('.btn-publicar');
-    const btnVerTodos = seccion.querySelector('.btn-ver-todos');
-    const comentariosRef = ref(db, 'comentarios/' + idSeccion);
-
-    function mostrarComentarios(snapshot) {
-      lista.innerHTML = "";
-      const comentarios = [];
-      snapshot.forEach(child => {
-        comentarios.push(child.val());
-      });
-
-      comentarios.reverse().forEach(c => {
-        const li = document.createElement("li");
-        li.textContent = c.mensaje;
-        lista.appendChild(li);
-      });
-    }
-
-    const ultimosComentarios = query(comentariosRef, limitToLast(5));
-    onValue(ultimosComentarios, mostrarComentarios);
-
-    btnPublicar.addEventListener('click', () => {
-      const texto = textarea.value.trim();
-      if (texto) {
-        push(comentariosRef, {
-          mensaje: texto,
-          fecha: Date.now()
-        });
-        textarea.value = "";
-      }
-    });
-
-    btnVerTodos.addEventListener('click', () => {
-      onValue(comentariosRef, mostrarComentarios, { onlyOnce: true });
-      btnVerTodos.style.display = 'none';
-    });
-  });
-</script>
-
-
-<!------- Esto sirve para manejar los comentarios ----->
 
 <body>
 
   <header class="encabezado-corto">
     <div class="logo-container">
-<img src="/Basura-X/IMG/MonkiFlip.gif" alt="Logo animado" />
+      <img src="/Basura-X/IMG/MonkiFlip.gif" alt="Logo animado" />
     </div>
     <div class="info-empresa">
       <h1>Exploración Urbana</h1>
@@ -161,85 +87,114 @@
     </ul>
   </nav>
 
-                  <!-- Estas son las secciones de exploración urbana, junto con la caja de comentarios -->
+  <!-- Sección 1 -->
+  <section class="exploracion">
+    <h2>Exploración: Montaña de noche</h2>
+    <img src="../IMG/tunel1.jpg" alt="Foto del túnel" width="300" />
+    <p>Buscando duendes</p>
 
-<!-- -------------------------------------------------------------Sseción #1------------------------------------------------- -->
+    <div class="comentarios" data-id="Montaña-noche">
+      <h3>Comentarios recientes:</h3>
+      <ul class="lista-comentarios"></ul>
+      <textarea class="comentario-textarea" placeholder="Escribe tu comentario..."></textarea><br>
+      <button class="btn-publicar">Publicar</button>
+      <button class="btn-ver-todos">Ver todos los comentarios</button>
+    </div>
+  </section>
 
-<section class="exploracion">
-  <h2>Exploración: Montaña de noche</h2>
-  <img src="../IMG/tunel1.jpg" alt="Foto del túnel" width="300" />
-  <p>Buscando duendes</p>
+  <!-- Sección 2 -->
+  <section class="exploracion">
+    <h2>Exploración: Chepe de noche</h2>
+    <img src="../IMG/tunel1.jpg" alt="Foto del túnel" width="300" />
+    <p>Chepe de noche: El inframundo urbano</p>
 
-  <!-- Caja de comentarios para esta sección -->
-  <div class="comentarios" data-id="Montaña-noche">
-    <h3>Comentarios recientes:</h3>
-    <ul class="lista-comentarios"></ul>
+    <div class="comentarios" data-id="chepe-de-noche">
+      <h3>Comentarios recientes:</h3>
+      <ul class="lista-comentarios"></ul>
+      <textarea class="comentario-textarea" placeholder="Escribe tu comentario..."></textarea><br>
+      <button class="btn-publicar">Publicar</button>
+      <button class="btn-ver-todos">Ver todos los comentarios</button>
+    </div>
+  </section>
 
-    <textarea class="comentario-textarea" placeholder="Escribe tu comentario..."></textarea>
-    <br>
-    <button class="btn-publicar">Publicar</button>
-    <button class="btn-ver-todos">Ver todos los comentarios</button>
-  </div>
-</section>
-<!-- -------------------------------------------------------------Sseción #1------------------------------------------------- -->
+  <!-- Sección 3 -->
+  <section class="exploracion">
+    <h2>Exploración: Cementerio de noche</h2>
+    <img src="../IMG/tunel1.jpg" alt="Foto del túnel" width="300" />
+    <p>Irrespetando el descanso de los muertos, por la anécdota</p>
 
-<!-- ------------------------------------------------------------------------------------------------------------------------- -->
-
-<!-- -------------------------------------------------------------Sseción #2------------------------------------------------- -->
-
-<section class="exploracion">
-  <h2>Exploración: Chepe de noche</h2>
-  <img src="../IMG/tunel1.jpg" alt="Foto del túnel" width="300" />
-  <p>Chepe de noche: El inframundo urbano</p>
-
-  <!-- Caja de comentarios para esta sección -->
-  <div class="comentarios" data-id="chepe-de-noche">
-    <h3>Comentarios recientes:</h3>
-    <ul class="lista-comentarios"></ul>
-
-    <textarea class="comentario-textarea" placeholder="Escribe tu comentario..."></textarea>
-    <br>
-    <button class="btn-publicar">Publicar</button>
-    <button class="btn-ver-todos">Ver todos los comentarios</button>
-  </div>
-</section>
-<!-- -------------------------------------------------------------Sseción #2------------------------------------------------- -->
-
-<!-- ------------------------------------------------------------------------------------------------------------------------- -->
-
-<!-- -------------------------------------------------------------Sseción #3------------------------------------------------- -->
-
-<section class="exploracion">
-  <h2>Exploración: Cementerio de noche</h2>
-  <img src="../IMG/tunel1.jpg" alt="Foto del túnel" width="300" />
-  <p>Irrespetando el descanso de los muertos, por la anecdota</p>
-
-  <!-- Caja de comentarios para esta sección -->
-  <div class="comentarios" data-id="Cementerio">
-    <h3>Comentarios recientes:</h3>
-    <ul class="lista-comentarios"></ul>
-
-    <textarea class="comentario-textarea" placeholder="Escribe tu comentario..."></textarea>
-    <br>
-    <button class="btn-publicar">Publicar</button>
-    <button class="btn-ver-todos">Ver todos los comentarios</button>
-  </div>
-</section>
-<!-- -------------------------------------------------------------Sseción #3------------------------------------------------- -->
-
-<!-- ------------------------------------------------------------------------------------------------------------------------- -->
-<!-- ------------------------------------Se pueden agregar más secciones en un futuro----------------------------------------- -->
-<!-- ------------------------------------------------------------------------------------------------------------------------- -->
-
-<!-- ------------------------------------------------------------------------------------------------------------------------- -->
-
-                  <!-- Estas son las secciones de exploración urbana, junto con la caja de comentarios -->
-
-  </main>
+    <div class="comentarios" data-id="Cementerio">
+      <h3>Comentarios recientes:</h3>
+      <ul class="lista-comentarios"></ul>
+      <textarea class="comentario-textarea" placeholder="Escribe tu comentario..."></textarea><br>
+      <button class="btn-publicar">Publicar</button>
+      <button class="btn-ver-todos">Ver todos los comentarios</button>
+    </div>
+  </section>
 
   <footer>
     <p>&copy; 2025 Axel R. | Exploraciones sin sentido pero con estilo</p>
   </footer>
 
+  <!-- Firebase scripts (deben ir al final del body) -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js"></script>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyAytiZpTTTpEubyapemywSSVnRs7OfrHT0",
+      authDomain: "comentarios-exploracion.firebaseapp.com",
+      databaseURL: "https://comentarios-exploracion-default-rtdb.firebaseio.com",
+      projectId: "comentarios-exploracion",
+      storageBucket: "comentarios-exploracion.firebasestorage.app",
+      messagingSenderId: "706570100799",
+      appId: "1:706570100799:web:6decf184c6c5f5fb07d88a"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+
+    document.querySelectorAll('.comentarios').forEach(seccion => {
+      const idSeccion = seccion.dataset.id;
+      const lista = seccion.querySelector('.lista-comentarios');
+      const textarea = seccion.querySelector('.comentario-textarea');
+      const btnPublicar = seccion.querySelector('.btn-publicar');
+      const btnVerTodos = seccion.querySelector('.btn-ver-todos');
+      const comentariosRef = db.ref('comentarios/' + idSeccion);
+
+      function mostrarComentarios(snapshot) {
+        lista.innerHTML = "";
+        const comentarios = [];
+        snapshot.forEach(child => {
+          comentarios.push(child.val());
+        });
+
+        comentarios.reverse().forEach(c => {
+          const li = document.createElement("li");
+          li.textContent = c.mensaje;
+          lista.appendChild(li);
+        });
+      }
+
+      comentariosRef.limitToLast(5).on('value', mostrarComentarios);
+
+      btnPublicar.addEventListener('click', () => {
+        const texto = textarea.value.trim();
+        if (texto) {
+          comentariosRef.push({
+            mensaje: texto,
+            fecha: Date.now()
+          });
+          textarea.value = "";
+        }
+      });
+
+      btnVerTodos.addEventListener('click', () => {
+        comentariosRef.once('value').then(mostrarComentarios);
+        btnVerTodos.style.display = 'none';
+      });
+    });
+  </script>
 </body>
 </html>
+
