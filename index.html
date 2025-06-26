@@ -12,6 +12,28 @@
 
 </head>
 
+                <!-- Caja de comentarios para exploración urbana -->
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getDatabase, ref, push, onValue, query, limitToLast } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyAytiZpTTTpEubyapemywSSVnRs7OfrHT0",
+    authDomain: "comentarios-exploracion.firebaseapp.com",
+    projectId: "comentarios-exploracion",
+    storageBucket: "comentarios-exploracion.firebasestorage.app",
+    messagingSenderId: "706570100799",
+    appId: "1:706570100799:web:6decf184c6c5f5fb07d88a",
+    databaseURL: "https://comentarios-exploracion-default-rtdb.firebaseio.com"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getDatabase(app);
+</script>
+
+
+                <!-- Caja de comentarios para exploración urbana -->                
 <body>
 
                 <!-- Esto es el encabezado de ¨bienvenidos al sitio de basura¨ -->

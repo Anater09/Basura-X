@@ -62,7 +62,105 @@
     }
   </style>
 </head>
+<!------- Esto es el enlace de la base de datos a la caja de comentarios ----->
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getDatabase } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyAytiZpTTTpEubyapemywSSVnRs7OfrHT0",
+    authDomain: "comentarios-exploracion.firebaseapp.com",
+    projectId: "comentarios-exploracion",
+    storageBucket: "comentarios-exploracion.firebasestorage.app",
+    messagingSenderId: "706570100799",
+    appId: "1:706570100799:web:6decf184c6c5f5fb07d88a",
+    databaseURL: "https://comentarios-exploracion-default-rtdb.firebaseio.com"
+  };
+
+  const app = initializeApp(firebaseConfig);
+</script>
+
+
+<!------- Esto es el enlace de la base de datos a la caja de comentarios ----->
+
+<!------- Esto sirve para manejar los comentarios ----->
+
+<script type="module">
+  import { getDatabase, ref, push, onValue, query, limitToLast } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+  const db = getDatabase();
+
+  document.querySelectorAll('.comentarios').forEach(seccion => {
+    const idSeccion = seccion.dataset.id;
+    const lista = seccion.querySelector('.lista-comentarios');
+    const textarea = seccion.querySelector('.comentario-textarea');
+    const btnPublicar = seccion.querySelector('.btn-publicar');
+    const btnVerTodos = seccion.querySelector('.btn-ver-todos');
+    const comentariosRef = ref(db, 'comentarios/' + idSeccion);
+
+    function mostrarComentarios(snapshot) {
+      lista.innerHTML = "";
+      const comentarios = [];
+      snapshot.forEach(child => {
+        comentarios.push(child.val());
+      });
+
+      comentarios.reverse().forEach(c => {
+        const li = document.createElement("li");
+        li.textContent = c.mensaje;
+        lista.appendChild(li);
+      });
+    }
+
+    const ultimosComentarios = query(comentariosRef, limitToLast(5));
+    onValue(ultimosComentarios, mostrarComentarios);
+
+    btnPublicar.addEventListener('click', () => {
+      const texto = textarea.value.trim();
+      if (texto) {
+        push(comentariosRef, {
+          mensaje: texto,
+          fecha: Date.now()
+        });
+        textarea.value = "";
+      }
+    });
+
+    btnVerTodos.addEventListener('click', () => {
+      onValue(comentariosRef, mostrarComentarios, { onlyOnce: true });
+      btnVerTodos.style.display = 'none';
+    });
+  });
+</script>
+
+
+<!------- Esto sirve para manejar los comentarios ----->
+
 <body>
+
+                  <!-- Esto es la caja de comentarios -->
+
+<section class="exploracion">
+  <h2>Exploración: Túnel abandonado</h2>
+  <img src="../IMG/tunel1.jpg" alt="Foto del túnel" width="300" />
+  <p>Exploramos este túnel en mayo de 2025. Oscuro, frío y perfecto para una buena historia de terror.</p>
+
+  <!-- Caja de comentarios para esta sección -->
+  <div class="comentarios" data-id="tunel">
+    <h3>Comentarios recientes:</h3>
+    <ul class="lista-comentarios"></ul>
+
+    <textarea class="comentario-textarea" placeholder="Escribe tu comentario..."></textarea>
+    <br>
+    <button class="btn-publicar">Publicar</button>
+    <button class="btn-ver-todos">Ver todos los comentarios</button>
+  </div>
+</section>
+
+
+                  <!-- Esto es la caja de comentarios -->
+
 
   <header class="encabezado-corto">
     <div class="logo-container">
