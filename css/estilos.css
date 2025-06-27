@@ -298,3 +298,24 @@ footer a:hover {
 
 /* Esto hace que los coemntarios de la página exploración urbana se vean bonitos */
 
+/* ----------------------------------------------------------------------------------------- */
+
+/* Esto hace que el nombre del que comentó se vea bien */
+
+.comentarios input.comentario-nombre {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  border: 1px solid #444;
+  background-color: #111;
+  color: white;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+.comentarios input.comentario-nombre::placeholder {
+  color: #888;
+}
+
+

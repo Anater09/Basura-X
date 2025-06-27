@@ -97,7 +97,7 @@
       <h3>Comentarios recientes:</h3>
       <ul class="lista-comentarios"></ul>
       <input class="comentario-nombre" type="text" placeholder="Tu nombre..." />
-      <br />
+      <br>
       <textarea class="comentario-textarea" placeholder="Escribe tu comentario..."></textarea>
 
       <button class="btn-publicar">Publicar</button>
@@ -115,7 +115,7 @@
       <h3>Comentarios recientes:</h3>
       <ul class="lista-comentarios"></ul>
       <input class="comentario-nombre" type="text" placeholder="Tu nombre..." />
-      <br />
+      <br>
       <textarea class="comentario-textarea" placeholder="Escribe tu comentario..."></textarea>
 
       <button class="btn-publicar">Publicar</button>
@@ -133,7 +133,7 @@
       <h3>Comentarios recientes:</h3>
       <ul class="lista-comentarios"></ul>
       <input class="comentario-nombre" type="text" placeholder="Tu nombre..." />
-      <br />
+      <br>
       <textarea class="comentario-textarea" placeholder="Escribe tu comentario..."></textarea>
 
       <button class="btn-publicar">Publicar</button>
@@ -145,7 +145,7 @@
     <p>&copy; 2025 Axel R. | Exploraciones sin sentido pero con estilo</p>
   </footer>
 
-  <!-- Firebase scripts (al final del body) -->
+  <!-- Firebase scripts (deben ir al final del body) -->
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js"></script>
 
@@ -166,8 +166,8 @@
     document.querySelectorAll('.comentarios').forEach(seccion => {
       const idSeccion = seccion.dataset.id;
       const lista = seccion.querySelector('.lista-comentarios');
-      const nombreInput = seccion.querySelector('.comentario-nombre');
       const textarea = seccion.querySelector('.comentario-textarea');
+      const nombreInput = seccion.querySelector('.comentario-nombre');
       const btnPublicar = seccion.querySelector('.btn-publicar');
       const btnVerTodos = seccion.querySelector('.btn-ver-todos');
       const comentariosRef = db.ref('comentarios/' + idSeccion);
@@ -181,7 +181,7 @@
 
         comentarios.reverse().forEach(c => {
           const li = document.createElement("li");
-          li.textContent = `${c.nombre || 'Anónimo'}: ${c.mensaje}`;
+          li.textContent = `${c.nombre}: ${c.mensaje}`;
           lista.appendChild(li);
         });
       }
