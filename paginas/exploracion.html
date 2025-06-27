@@ -96,7 +96,10 @@
     <div class="comentarios" data-id="Montaña-noche">
       <h3>Comentarios recientes:</h3>
       <ul class="lista-comentarios"></ul>
-      <textarea class="comentario-textarea" placeholder="Escribe tu comentario..."></textarea><br>
+      <input class="comentario-nombre" type="text" placeholder="Tu nombre..." />
+      <br />
+      <textarea class="comentario-textarea" placeholder="Escribe tu comentario..."></textarea>
+
       <button class="btn-publicar">Publicar</button>
       <button class="btn-ver-todos">Ver todos los comentarios</button>
     </div>
@@ -111,7 +114,10 @@
     <div class="comentarios" data-id="chepe-de-noche">
       <h3>Comentarios recientes:</h3>
       <ul class="lista-comentarios"></ul>
-      <textarea class="comentario-textarea" placeholder="Escribe tu comentario..."></textarea><br>
+      <input class="comentario-nombre" type="text" placeholder="Tu nombre..." />
+      <br />
+      <textarea class="comentario-textarea" placeholder="Escribe tu comentario..."></textarea>
+
       <button class="btn-publicar">Publicar</button>
       <button class="btn-ver-todos">Ver todos los comentarios</button>
     </div>
@@ -126,7 +132,10 @@
     <div class="comentarios" data-id="Cementerio">
       <h3>Comentarios recientes:</h3>
       <ul class="lista-comentarios"></ul>
-      <textarea class="comentario-textarea" placeholder="Escribe tu comentario..."></textarea><br>
+      <input class="comentario-nombre" type="text" placeholder="Tu nombre..." />
+      <br />
+      <textarea class="comentario-textarea" placeholder="Escribe tu comentario..."></textarea>
+
       <button class="btn-publicar">Publicar</button>
       <button class="btn-ver-todos">Ver todos los comentarios</button>
     </div>
@@ -136,7 +145,7 @@
     <p>&copy; 2025 Axel R. | Exploraciones sin sentido pero con estilo</p>
   </footer>
 
-  <!-- Firebase scripts (deben ir al final del body) -->
+  <!-- Firebase scripts (al final del body) -->
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js"></script>
 
@@ -157,6 +166,7 @@
     document.querySelectorAll('.comentarios').forEach(seccion => {
       const idSeccion = seccion.dataset.id;
       const lista = seccion.querySelector('.lista-comentarios');
+      const nombreInput = seccion.querySelector('.comentario-nombre');
       const textarea = seccion.querySelector('.comentario-textarea');
       const btnPublicar = seccion.querySelector('.btn-publicar');
       const btnVerTodos = seccion.querySelector('.btn-ver-todos');
@@ -171,7 +181,7 @@
 
         comentarios.reverse().forEach(c => {
           const li = document.createElement("li");
-          li.textContent = c.mensaje;
+          li.textContent = `${c.nombre || 'Anónimo'}: ${c.mensaje}`;
           lista.appendChild(li);
         });
       }
@@ -180,12 +190,18 @@
 
       btnPublicar.addEventListener('click', () => {
         const texto = textarea.value.trim();
-        if (texto) {
+        const nombre = nombreInput.value.trim();
+
+        if (nombre && texto) {
           comentariosRef.push({
+            nombre: nombre,
             mensaje: texto,
             fecha: Date.now()
           });
           textarea.value = "";
+          nombreInput.value = "";
+        } else {
+          alert("Por favor, ingresa tu nombre y un comentario.");
         }
       });
 
@@ -197,4 +213,3 @@
   </script>
 </body>
 </html>
-
